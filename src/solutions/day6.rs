@@ -1,5 +1,3 @@
-use std::collections::HashSet;
-
 pub fn day6(input: &str) -> (String, String) {
     let chars = input
         .trim()
@@ -22,10 +20,20 @@ fn distinct_window_end(chars: &[char], window_size: usize) -> usize {
 }
 
 fn distinct_chars(chars: &[char]) -> bool {
-    let len = chars.len();
-    let set: HashSet<&char> = HashSet::from_iter(chars.iter());
+    // Since the input set of characters is lowercase ascii,
+    // each character can be converted to a bitmask represention
+    // that fits inside a u32 as there's only 26 letters :)
+    let mut bits: u32 = 0;
+    for ch in chars {
+        let char_mask: u32 = 1 << ((*ch as u32) - 97);
+        // bitwise or
+        bits |= char_mask;
+    }
 
-    set.len() == len
+    // If the set of chars is unique, then each char mask should
+    // have only set one bit, and the popcount should be equal to
+    // the number of chars input
+    bits.count_ones() == chars.len() as u32
 }
 
 #[cfg(test)]
