@@ -12,6 +12,7 @@ pub fn day2(input: &str) -> (String, String) {
     (out.0.to_string(), out.1.to_string())
 }
 
+#[allow(clippy::identity_op)]
 fn score(pair: &str) -> i32 {
     match pair {
         "A X" => 1 + 3,
@@ -30,6 +31,7 @@ fn score(pair: &str) -> i32 {
     }
 }
 
+#[allow(clippy::identity_op)]
 fn outcome(pair: &str) -> i32 {
     match pair {
         "A X" => 0 + 3,
