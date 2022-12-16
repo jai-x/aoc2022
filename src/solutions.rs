@@ -11,10 +11,11 @@ mod day9;
 mod day10;
 mod day11;
 mod day12;
+mod day13;
 
 type Solution = fn(&str) -> (String, String);
 
-pub static DAYS: [Solution; 13] = [
+pub static DAYS: [Solution; 14] = [
     day0::day0,
     day1::day1,
     day2::day2,
@@ -28,4 +29,5 @@ pub static DAYS: [Solution; 13] = [
     day10::day10,
     day11::day11,
     day12::day12,
+    day13::day13,
 ];
