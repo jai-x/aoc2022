@@ -51,7 +51,7 @@ impl Debug for Cave {
         }
 
         out.push_str("    }\n");
-        out.push_str("}");
+        out.push('}');
 
         writeln!(f, "{}", out)
     }
@@ -61,9 +61,9 @@ impl Cave {
     fn parse(input: &str) -> Cave {
         let rocks: HashSet<(usize, usize)> = input
             .lines()
-            .map(|line| {
+            .flat_map(|line| {
                 line.split(" -> ")
-                    .map(|pair| pair.split(",").collect::<Vec<&str>>())
+                    .map(|pair| pair.split(',').collect::<Vec<&str>>())
                     .map(|pair_vec| {
                         let x = pair_vec[0].parse().unwrap();
                         let y = pair_vec[1].parse().unwrap();
@@ -71,11 +71,9 @@ impl Cave {
                     })
                     .collect::<Vec<(usize,usize)>>()
                     .windows(2)
-                    .map(|pair| Self::coord_travel(pair[0], pair[1]))
-                    .flatten()
+                    .flat_map(|pair| Self::coord_travel(pair[0], pair[1]))
                     .collect::<Vec<(usize, usize)>>()
             })
-            .flatten()
             .collect();
 
         let abyss = *rocks.iter().map(|(_, y)| y).max().unwrap();
