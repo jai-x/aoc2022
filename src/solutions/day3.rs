@@ -25,12 +25,11 @@ fn part1(rucksacks: Vec<Vec<char>>) -> String {
             let left: HashSet<char> = HashSet::from_iter(left.into_iter());
             let right: HashSet<char> = HashSet::from_iter(right.into_iter());
 
-            left.intersection(&right)
+            *left.intersection(&right)
                 .cloned()
                 .collect::<Vec<char>>()
                 .first()
                 .unwrap()
-                .clone()
         })
         .map(priority)
         .sum::<u32>()
@@ -46,7 +45,7 @@ fn part2(rucksacks: Vec<Vec<char>>) -> String {
             let thr: HashSet<&char> = HashSet::from_iter(chunk[2].iter());
 
             let one_two = one.intersection(&two).cloned().collect::<HashSet<&char>>();
-            thr.intersection(&one_two).cloned().collect::<Vec<&char>>()[0].clone()
+            *thr.intersection(&one_two).cloned().collect::<Vec<&char>>()[0]
         })
         .map(priority)
         .sum::<u32>()
