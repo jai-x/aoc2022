@@ -1,5 +1,5 @@
-use std::fmt::{Debug, Formatter, Result};
 use std::collections::HashSet;
+use std::fmt::{Debug, Formatter, Result};
 
 enum CaveEnd {
     Abyss,
@@ -69,7 +69,7 @@ impl Cave {
                         let y = pair_vec[1].parse().unwrap();
                         (x, y)
                     })
-                    .collect::<Vec<(usize,usize)>>()
+                    .collect::<Vec<(usize, usize)>>()
                     .windows(2)
                     .flat_map(|pair| Self::coord_travel(pair[0], pair[1]))
                     .collect::<Vec<(usize, usize)>>()
@@ -118,13 +118,13 @@ impl Cave {
                     if y == self.abyss {
                         return None; // not settled
                     }
-                },
+                }
                 CaveEnd::Floor => {
                     if y == self.abyss + 1 {
                         self.sand.insert((x, y));
                         return Some((x, y)); // settled on floor
                     }
-                },
+                }
             }
 
             let below = (x, y + 1);
@@ -160,7 +160,7 @@ impl Cave {
             }
 
             self.sand.insert((x, y));
-            return Some((x, y)) // settled
+            return Some((x, y)); // settled
         }
     }
 }

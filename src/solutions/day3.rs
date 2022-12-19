@@ -25,7 +25,8 @@ fn part1(rucksacks: Vec<Vec<char>>) -> String {
             let left: HashSet<char> = HashSet::from_iter(left.into_iter());
             let right: HashSet<char> = HashSet::from_iter(right.into_iter());
 
-            *left.intersection(&right)
+            *left
+                .intersection(&right)
                 .cloned()
                 .collect::<Vec<char>>()
                 .first()

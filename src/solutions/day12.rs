@@ -1,6 +1,6 @@
-use std::collections::{VecDeque, HashSet, HashMap};
+use std::collections::{HashMap, HashSet, VecDeque};
 
-const OFFSETS: [(isize,isize); 4] = [(0, 1), (0, -1), (1, 0), (-1, 0)];
+const OFFSETS: [(isize, isize); 4] = [(0, 1), (0, -1), (1, 0), (-1, 0)];
 
 #[derive(Debug)]
 struct HeightMap {
@@ -21,7 +21,6 @@ impl HeightMap {
             })
             .collect();
 
-
         let mut start: (isize, isize) = (0, 0);
         let mut goal: (isize, isize) = (0, 0);
 
@@ -36,7 +35,11 @@ impl HeightMap {
         heights.entry(start).and_modify(|ch| *ch = 'a');
         heights.entry(goal).and_modify(|ch| *ch = 'z');
 
-        HeightMap { heights, start, goal }
+        HeightMap {
+            heights,
+            start,
+            goal,
+        }
     }
 
     // Bad Djikstra's :)
@@ -124,7 +127,6 @@ impl HeightMap {
     }
 }
 
-
 pub fn day12(input: &str) -> (String, String) {
     let height_map = HeightMap::parse(input);
 
@@ -136,13 +138,7 @@ pub fn day12(input: &str) -> (String, String) {
 
 #[cfg(test)]
 mod tests {
-    const INPUT_LINES: [&str; 5] = [
-        "Sabqponm",
-        "abcryxxl",
-        "accszExk",
-        "acctuvwj",
-        "abdefghi",
-    ];
+    const INPUT_LINES: [&str; 5] = ["Sabqponm", "abcryxxl", "accszExk", "acctuvwj", "abdefghi"];
 
     #[test]
     fn test_day0() {

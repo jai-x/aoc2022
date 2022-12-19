@@ -25,7 +25,12 @@ impl Monkies {
         let monkey_inputs: Vec<Vec<&str>> = input
             .split("\n\n")
             .map(|group| group.lines().collect::<Vec<&str>>())
-            .map(|lines| lines.into_iter().map(|line| line.trim()).collect::<Vec<&str>>())
+            .map(|lines| {
+                lines
+                    .into_iter()
+                    .map(|line| line.trim())
+                    .collect::<Vec<&str>>()
+            })
             .collect();
 
         for monkey_lines in monkey_inputs {

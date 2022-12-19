@@ -25,11 +25,11 @@ pub fn day10(input: &str) -> (String, String) {
         match instr {
             ("noop", _) => {
                 cycles.push((c + 1, x));
-            },
+            }
             ("addx", Some(v)) => {
                 cycles.push((c + 1, x));
                 cycles.push((c + 2, x + v));
-            },
+            }
             _ => panic!(),
         }
     }
@@ -41,13 +41,16 @@ pub fn day10(input: &str) -> (String, String) {
         .sum::<isize>()
         .to_string();
 
-
     let mut part2: String = String::new();
     part2.push('\n');
 
     for (c, x) in cycles {
         let p = c % 40;
-        let out = if p == x || p == x + 1 || p == x + 2 { '█' } else { ' ' };
+        let out = if p == x || p == x + 1 || p == x + 2 {
+            '█'
+        } else {
+            ' '
+        };
 
         part2.push(out);
         if line_cycles.contains(&c) {

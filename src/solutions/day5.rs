@@ -34,13 +34,21 @@ fn cratemover_9000(mut stacks: Vec<Vec<char>>, movement: &[(usize, usize, usize)
 }
 
 fn top_elements(stacks: Vec<Vec<char>>) -> String {
-    stacks.iter().map(|stack| stack.last().unwrap()).collect::<String>()
+    stacks
+        .iter()
+        .map(|stack| stack.last().unwrap())
+        .collect::<String>()
 }
 
 fn build_movement(move_instructions: &str) -> Vec<(usize, usize, usize)> {
     move_instructions
         .lines()
-        .map(|line| line.chars().map(|ch| match ch { '0'..='9' => ch, _ => ' ', }))
+        .map(|line| {
+            line.chars().map(|ch| match ch {
+                '0'..='9' => ch,
+                _ => ' ',
+            })
+        })
         .map(|chars| chars.collect::<String>())
         .map(|num_only| {
             num_only

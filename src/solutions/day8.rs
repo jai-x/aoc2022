@@ -17,7 +17,11 @@ impl TreeMap {
             .map(|i| i as usize)
             .collect();
 
-        TreeMap { width, height, tree_heights }
+        TreeMap {
+            width,
+            height,
+            tree_heights,
+        }
     }
 
     fn xy_to_idx(&self, x: usize, y: usize) -> usize {
@@ -46,10 +50,14 @@ impl TreeMapSurvey {
         let mut scenic_scores: Vec<usize> = Vec::new();
 
         for (idx, tree_height) in tree_map.tree_heights.iter().enumerate() {
-            let (visible_up, distance_up) = TreeMapSurvey::survey_trees_up(tree_map, idx, tree_height);
-            let (visible_down, distance_down) = TreeMapSurvey::survey_trees_down(tree_map, idx, tree_height);
-            let (visible_left, distance_left) = TreeMapSurvey::survey_trees_left(tree_map, idx, tree_height);
-            let (visible_right, distance_right) = TreeMapSurvey::survey_trees_right(tree_map, idx, tree_height);
+            let (visible_up, distance_up) =
+                TreeMapSurvey::survey_trees_up(tree_map, idx, tree_height);
+            let (visible_down, distance_down) =
+                TreeMapSurvey::survey_trees_down(tree_map, idx, tree_height);
+            let (visible_left, distance_left) =
+                TreeMapSurvey::survey_trees_left(tree_map, idx, tree_height);
+            let (visible_right, distance_right) =
+                TreeMapSurvey::survey_trees_right(tree_map, idx, tree_height);
 
             let visible_outside = visible_up || visible_down || visible_left || visible_right;
             let scenic_score = distance_up * distance_down * distance_left * distance_right;
@@ -58,7 +66,10 @@ impl TreeMapSurvey {
             scenic_scores.push(scenic_score);
         }
 
-        TreeMapSurvey { outside_visibilities, scenic_scores }
+        TreeMapSurvey {
+            outside_visibilities,
+            scenic_scores,
+        }
     }
 
     fn survey_trees_up(tree_map: &TreeMap, idx: usize, tree_height: &usize) -> (bool, usize) {
@@ -118,7 +129,7 @@ impl TreeMapSurvey {
         (true, viewing_distance)
     }
 
-    fn survey_trees_right(tree_map: &TreeMap, idx: usize, tree_height: &usize) -> (bool, usize)  {
+    fn survey_trees_right(tree_map: &TreeMap, idx: usize, tree_height: &usize) -> (bool, usize) {
         let (x, y) = tree_map.idx_to_xy(idx);
         let mut viewing_distance: usize = 0;
 
@@ -158,7 +169,6 @@ pub fn day8(input: &str) -> (String, String) {
 
     (part1, part2)
 }
-
 
 #[cfg(test)]
 mod tests {

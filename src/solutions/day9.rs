@@ -6,7 +6,12 @@ pub fn day9(input: &str) -> (String, String) {
         .lines()
         .map(|line| line.trim())
         .map(|line| line.split_whitespace().collect::<Vec<&str>>())
-        .map(|parts| (parts[0].chars().next().unwrap(), parts[1].parse::<isize>().unwrap()))
+        .map(|parts| {
+            (
+                parts[0].chars().next().unwrap(),
+                parts[1].parse::<isize>().unwrap(),
+            )
+        })
         .collect();
 
     let head_positions = head_positions(instructions);
@@ -20,8 +25,10 @@ pub fn day9(input: &str) -> (String, String) {
     let tail_positions_8 = tail_positions(&tail_positions_7);
     let tail_positions_9 = tail_positions(&tail_positions_8);
 
-    let uniq_tail_positions_1: HashSet<(isize, isize)> = HashSet::from_iter(tail_positions_1.into_iter());
-    let uniq_tail_positions_9: HashSet<(isize, isize)> = HashSet::from_iter(tail_positions_9.into_iter());
+    let uniq_tail_positions_1: HashSet<(isize, isize)> =
+        HashSet::from_iter(tail_positions_1.into_iter());
+    let uniq_tail_positions_9: HashSet<(isize, isize)> =
+        HashSet::from_iter(tail_positions_9.into_iter());
     let part1 = uniq_tail_positions_1.len().to_string();
     let part2 = uniq_tail_positions_9.len().to_string();
 
@@ -60,28 +67,28 @@ fn tail_positions(head_positions: &Vec<(isize, isize)>) -> Vec<(isize, isize)> {
         // ..H...H....
         let new_tail_pos = match (off_x, off_y) {
             // Part 1
-            ( 0,  2) => (tail_x    , tail_y + 1),
-            ( 0, -2) => (tail_x    , tail_y - 1),
+            (0, 2) => (tail_x, tail_y + 1),
+            (0, -2) => (tail_x, tail_y - 1),
 
-            ( 2,  0) => (tail_x + 1, tail_y    ),
-            (-2,  0) => (tail_x - 1, tail_y    ),
+            (2, 0) => (tail_x + 1, tail_y),
+            (-2, 0) => (tail_x - 1, tail_y),
 
-            ( 2,  1) => (tail_x + 1, tail_y + 1),
-            ( 1,  2) => (tail_x + 1, tail_y + 1),
+            (2, 1) => (tail_x + 1, tail_y + 1),
+            (1, 2) => (tail_x + 1, tail_y + 1),
 
-            (-2,  1) => (tail_x - 1, tail_y + 1),
-            (-1,  2) => (tail_x - 1, tail_y + 1),
+            (-2, 1) => (tail_x - 1, tail_y + 1),
+            (-1, 2) => (tail_x - 1, tail_y + 1),
 
             (-2, -1) => (tail_x - 1, tail_y - 1),
             (-1, -2) => (tail_x - 1, tail_y - 1),
 
-            ( 2, -1) => (tail_x + 1, tail_y - 1),
-            ( 1, -2) => (tail_x + 1, tail_y - 1),
+            (2, -1) => (tail_x + 1, tail_y - 1),
+            (1, -2) => (tail_x + 1, tail_y - 1),
 
             // Part 2
-            ( 2,  2) => (tail_x + 1, tail_y + 1),
-            (-2,  2) => (tail_x - 1, tail_y + 1),
-            ( 2, -2) => (tail_x + 1, tail_y - 1),
+            (2, 2) => (tail_x + 1, tail_y + 1),
+            (-2, 2) => (tail_x - 1, tail_y + 1),
+            (2, -2) => (tail_x + 1, tail_y - 1),
             (-2, -2) => (tail_x - 1, tail_y - 1),
             _ => panic!(),
         };
@@ -105,7 +112,7 @@ fn head_positions(instructions: Vec<(char, isize)>) -> Vec<(isize, isize)> {
             'D' => ((y - dist)..y).rev().map(|y| (x, y)).collect(),
             'R' => ((x + 1)..=(x + dist)).map(|x| (x, y)).collect(),
             'L' => ((x - dist)..x).rev().map(|x| (x, y)).collect(),
-            _ => panic!()
+            _ => panic!(),
         };
 
         head_positions.append(&mut movements);
@@ -117,7 +124,7 @@ fn head_positions(instructions: Vec<(char, isize)>) -> Vec<(isize, isize)> {
 #[cfg(test)]
 mod tests {
     const INPUTS: [&str; 2] = [
-    "R 4
+        "R 4
      U 4
      L 3
      D 1
@@ -125,8 +132,7 @@ mod tests {
      D 1
      L 5
      R 2",
-
-     "R 5
+        "R 5
       U 8
       L 8
       D 3

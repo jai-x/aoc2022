@@ -39,27 +39,27 @@ fn ordered_dir_sizes(commands: Vec<Vec<&str>>) -> Vec<usize> {
         match line.as_slice() {
             ["$", "ls"] => {
                 continue;
-            },
+            }
 
             ["dir", _] => {
                 continue;
-            },
+            }
 
             ["$", "cd", ".."] => {
                 pwd_stack.pop();
                 continue;
-            },
+            }
 
             ["$", "cd", "/"] => {
                 pwd_stack.clear();
                 pwd_stack.push("root".to_string());
                 continue;
-            },
+            }
 
-            ["$", "cd", folder]=> {
+            ["$", "cd", folder] => {
                 pwd_stack.push(folder.to_string());
                 continue;
-            },
+            }
 
             [file_size, _] => {
                 let file_size = file_size.parse::<usize>().unwrap();
@@ -74,7 +74,7 @@ fn ordered_dir_sizes(commands: Vec<Vec<&str>>) -> Vec<usize> {
                 }
 
                 continue;
-            },
+            }
 
             _ => (),
         };

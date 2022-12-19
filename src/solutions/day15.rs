@@ -1,10 +1,10 @@
 struct Map {
-    sensor_ranges: Vec::<((isize, isize), usize)>,
+    sensor_ranges: Vec<((isize, isize), usize)>,
 }
 
 impl Map {
     fn parse(input: &str) -> Map {
-        let sensor_ranges: Vec::<((isize, isize), usize)> = input
+        let sensor_ranges: Vec<((isize, isize), usize)> = input
             .lines()
             .map(|line| {
                 let (s_part, b_part) = line.split_once(": ").unwrap();
@@ -40,10 +40,11 @@ impl Map {
     }
 
     fn intersecting_x_ranges(&self, at_y: isize, clamp: Option<isize>) -> Vec<(isize, isize)> {
-        let mut ranges: Vec<(isize, isize)> = self.sensor_ranges
+        let mut ranges: Vec<(isize, isize)> = self
+            .sensor_ranges
             .iter()
             .filter(|(sensor, sensor_to_beacon)| {
-                let closest_y   = (sensor.0, at_y);
+                let closest_y = (sensor.0, at_y);
                 let sensor_to_y = Self::manhatten(*sensor, closest_y);
 
                 sensor_to_y <= *sensor_to_beacon
@@ -54,7 +55,10 @@ impl Map {
 
                 match clamp {
                     None => ((sensor.0 - surrounding_at_y), (sensor.0 + surrounding_at_y)),
-                    Some(x) => (0.max(sensor.0 - surrounding_at_y), x.min(sensor.0 + surrounding_at_y)),
+                    Some(x) => (
+                        0.max(sensor.0 - surrounding_at_y),
+                        x.min(sensor.0 + surrounding_at_y),
+                    ),
                 }
             })
             .collect();
@@ -78,7 +82,6 @@ impl Map {
 
             for (_, end_a) in &intersecting_x_ranges {
                 for (start_b, _) in &intersecting_x_ranges {
-
                     // Candidate x after range a
                     let candidate_x = end_a + 1;
 
@@ -102,7 +105,6 @@ impl Map {
         (0, 0)
     }
 }
-
 
 pub fn day15(input: &str) -> (String, String) {
     let dependant = if cfg!(test) { 10 } else { 2_000_000 };

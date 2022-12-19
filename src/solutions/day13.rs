@@ -1,5 +1,5 @@
-use std::fmt::{Debug, Formatter, Result};
 use std::cmp::Ordering;
+use std::fmt::{Debug, Formatter, Result};
 
 trait StringExt {
     fn is_bracketed(&self) -> bool;
@@ -87,7 +87,7 @@ impl Debug for Packet {
                     .join(",");
 
                 write!(f, "[{}]", formatted)
-            },
+            }
         }
     }
 }
@@ -100,20 +100,20 @@ impl PartialOrd for Packet {
 
 impl Ord for Packet {
     fn cmp(&self, other: &Self) -> Ordering {
-        use Packet::{Num, List};
+        use Packet::{List, Num};
 
         match (self, other) {
             // Wrap number as list
             (lhs_num @ Num(_), rhs_list @ List(_)) => {
                 let lhs_list = List(vec![lhs_num.clone()]);
                 lhs_list.cmp(rhs_list)
-            },
+            }
 
             // Wrap number as list
             (lhs_list @ List(_), rhs_num @ Num(_)) => {
                 let rhs_list = List(vec![rhs_num.clone()]);
                 lhs_list.cmp(&rhs_list)
-            },
+            }
 
             // Compare numbers
             (Num(lhs_num), Num(rhs_num)) => lhs_num.cmp(rhs_num),
@@ -134,14 +134,14 @@ impl Ord for Packet {
 
                 // One or both lists have run out
                 lhs_len.cmp(&rhs_len)
-            },
+            }
         }
     }
 }
 
 impl Packet {
     fn parse(input: String) -> Packet {
-        use Packet::{Num, List};
+        use Packet::{List, Num};
 
         if !input.is_bracketed() {
             return Num(input.trim().parse().unwrap());
@@ -237,16 +237,10 @@ mod tests {
     #[test]
     fn test_day13_packet_parse() {
         use super::Packet;
-        use super::Packet::{Num, List};
+        use super::Packet::{List, Num};
 
         let parsed = Packet::parse("[1,1,3,1,1]".to_string());
-        let packet = List(vec![
-            Num(1),
-            Num(1),
-            Num(3),
-            Num(1),
-            Num(1),
-        ]);
+        let packet = List(vec![Num(1), Num(1), Num(3), Num(1), Num(1)]);
         assert_eq!(parsed, packet);
 
         let parsed = Packet::parse("[[[]]]".to_string());
@@ -257,18 +251,11 @@ mod tests {
         let packet = List(vec![
             Num(1),
             List(vec![
-                 Num(2),
-                 List(vec![
-                      Num(3),
-                      List(vec![
-                           Num(4),
-                           List(vec![
-                                Num(5),
-                                Num(6),
-                                Num(7),
-                           ]),
-                      ]),
-                 ]),
+                Num(2),
+                List(vec![
+                    Num(3),
+                    List(vec![Num(4), List(vec![Num(5), Num(6), Num(7)])]),
+                ]),
             ]),
             Num(8),
             Num(9),
@@ -278,52 +265,18 @@ mod tests {
 
     #[test]
     fn test_day13_packet_ord() {
-        use super::Packet::{Num, List};
+        use super::Packet::{List, Num};
 
-        let lhs = List(vec![
-            Num(1),
-            Num(1),
-            Num(3),
-            Num(1),
-            Num(1),
-        ]);
-        let rhs = List(vec![
-            Num(1),
-            Num(1),
-            Num(5),
-            Num(1),
-            Num(1),
-        ]);
+        let lhs = List(vec![Num(1), Num(1), Num(3), Num(1), Num(1)]);
+        let rhs = List(vec![Num(1), Num(1), Num(5), Num(1), Num(1)]);
         assert_eq!(lhs < rhs, true);
 
-        let lhs = List(vec![
-            List(vec![
-                 Num(1),
-            ]),
-            List(vec![
-                 Num(2),
-                 Num(3),
-                 Num(4),
-            ]),
-        ]);
-        let rhs = List(vec![
-            List(vec![
-                 Num(1),
-            ]),
-            Num(4),
-        ]);
+        let lhs = List(vec![List(vec![Num(1)]), List(vec![Num(2), Num(3), Num(4)])]);
+        let rhs = List(vec![List(vec![Num(1)]), Num(4)]);
         assert_eq!(lhs < rhs, true);
 
-        let lhs = List(vec![
-            Num(9),
-        ]);
-        let rhs = List(vec![
-            List(vec![
-                 Num(8),
-                 Num(7),
-                 Num(6),
-            ]),
-        ]);
+        let lhs = List(vec![Num(9)]);
+        let rhs = List(vec![List(vec![Num(8), Num(7), Num(6)])]);
         assert_eq!(lhs < rhs, false);
     }
 

@@ -1,8 +1,5 @@
 pub fn day6(input: &str) -> (String, String) {
-    let chars = input
-        .trim()
-        .chars()
-        .collect::<Vec<char>>();
+    let chars = input.trim().chars().collect::<Vec<char>>();
 
     let part1 = distinct_window_end(&chars, 4).to_string();
     let part2 = distinct_window_end(&chars, 14).to_string();
@@ -11,10 +8,7 @@ pub fn day6(input: &str) -> (String, String) {
 }
 
 fn distinct_window_end(chars: &[char], window_size: usize) -> usize {
-    let marker = chars
-        .windows(window_size)
-        .position(distinct_chars)
-        .unwrap();
+    let marker = chars.windows(window_size).position(distinct_chars).unwrap();
 
     marker + window_size
 }
