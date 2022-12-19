@@ -90,7 +90,7 @@ impl Monkies {
         }
     }
 
-    fn do_round(&mut self, worry_divide: usize) -> () {
+    fn do_round(&mut self, worry_divide: usize) {
         for i in 0..self.items.len() {
             while let Some(old_worry) = self.items[i].pop_front() {
                 let op_value = match self.op_values[i] {
